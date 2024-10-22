@@ -1,0 +1,14 @@
+---
+import People from '@/components/People.vue';
+import Hero from '@/partials/Hero.astro';
+import Base from '@/templates/Base.astro';
+import { AppConfig } from '@/utils/AppConfig';
+
+const { title } = AppConfig;
+const { description } = AppConfig;
+---
+
+<Base head={{ title, description }}>
+  <Hero />
+  <People />
+</Base>

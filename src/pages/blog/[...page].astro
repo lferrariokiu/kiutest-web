@@ -1,0 +1,40 @@
+---
+import PaginationHeader from '@/components/PaginationHeader.vue';
+import Section from '@/components/Section.vue';
+import Test from '@/components/Test.astro';
+
+import Base from '@/templates/Base.astro';
+import { AppConfig } from '@/utils/AppConfig';
+
+type GetStaticPaths = {
+  paginate: any;
+}; // Overrides `GetStaticPathsOptions` types from Astro
+
+export async function getStaticPaths({ paginate }: GetStaticPaths) {
+  const allPosts = [];
+  const sortedPosts = [...allPosts.sort()];
+
+  // Return a paginated collection of paths for all posts
+  return paginate(sortedPosts, { pageSize: 6 });
+}
+
+const { page } = Astro.props;
+const titleSuffix = ` - ${AppConfig.site_name}`;
+const titleBase = `Blog page ${page.currentPage}`;
+const title = titleBase + titleSuffix;
+const description = 'description';
+---
+
+<Base head={{ title, description }}>
+  <Section>
+    <PaginationHeader
+      title="Blog"
+      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    />
+  </Section>
+
+  <Section>
+    <Test></Test>
+  </Section>
+
+</Base>

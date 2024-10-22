@@ -1,0 +1,23 @@
+---
+import { contentfulClient } from '@/lib/contentful';
+import type { EntryFieldTypes } from 'contentful';
+import HeroCarousel from '@/components/HeroCarousel.vue';
+
+// create an interface for each content type
+interface Hero {
+    contentTypeId: 'hero',
+    fields: {
+        // make sure to type all fields
+        images: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>
+    }
+}
+// docs: https://contentful.github.io/contentful.js/contentful/4.5.0/ContentfulClientAPI.html
+// get single entry by id
+const entry = await contentfulClient.getEntry<Hero>('238R3x4G1HeXbNjtmhhHMT')
+---
+
+<body>
+    <div class="mx-auto max-w-screen-lg px-3 py-6 gap-2 flex">
+        <HeroCarousel images={entry.fields.images} />
+    </div>
+</body>

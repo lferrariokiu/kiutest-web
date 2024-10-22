@@ -1,0 +1,32 @@
+---
+import { contentfulClient } from '../lib/contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import type { EntryFieldTypes } from 'contentful';
+import TestMe from '@/components/TestMe.vue';
+
+interface BlogPost {
+  contentTypeId: 'blogpost';
+  fields: {
+    hero: EntryFieldTypes.AssetLink;
+    title: EntryFieldTypes.Text;
+    content: EntryFieldTypes.RichText;
+  };
+}
+// docs: https://contentful.github.io/contentful.js/contentful/4.5.0/ContentfulClientAPI.html
+const entries = await contentfulClient.getEntries<BlogPost>({
+  content_type: 'blogpost',
+});
+
+---
+
+<body>
+  <div style="display: flex; gap: 2rem">
+    {
+      entries.items.map((item) => (
+        <section>
+          <TestMe item={item} />
+        </section>
+      ))
+    }
+  </div>
+</body>
